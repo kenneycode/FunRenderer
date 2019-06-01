@@ -1,8 +1,8 @@
 package io.github.kenneycode.funrenderer.demo
 
+import android.app.Activity
 import android.opengl.GLSurfaceView
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import io.github.kenneycode.funrenderer.io.Input
 import io.github.kenneycode.funrenderer.io.Texture
 import io.github.kenneycode.funrenderer.renderer.Renderer
@@ -21,7 +21,7 @@ import javax.microedition.khronos.opengles.GL10
  *
  **/
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     private lateinit var renderer: Renderer
     private lateinit var input: Input
