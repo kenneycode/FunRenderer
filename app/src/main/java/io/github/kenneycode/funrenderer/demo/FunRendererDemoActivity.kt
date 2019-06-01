@@ -9,7 +9,6 @@ import io.github.kenneycode.funrenderer.renderer.Renderer
 import io.github.kenneycode.funrenderer.renderer.ScreenRenderer
 import io.github.kenneycode.funrenderer.uitl.FileUtil
 import io.github.kenneycode.funrenderer.uitl.GLUtil
-import kenneycode.funrenderer.demo.R
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -21,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10
  *
  **/
 
-class MainActivity : Activity() {
+class FunRendererDemoActivity : Activity() {
 
     private lateinit var renderer: Renderer
     private lateinit var input: Input

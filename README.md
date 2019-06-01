@@ -15,7 +15,7 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.github.kenneycode:FunRenderer:v1.0'
+    implementation 'com.github.kenneycode:FunRenderer:1.0.0'
 }
 ```
 
