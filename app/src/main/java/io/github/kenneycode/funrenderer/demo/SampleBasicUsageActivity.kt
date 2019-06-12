@@ -20,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10
  *
  **/
 
-class FunRendererDemoActivity : Activity() {
+class SampleBasicUsageActivity : Activity() {
 
     private lateinit var renderer: Renderer
     private lateinit var input: Input
@@ -30,8 +30,7 @@ class FunRendererDemoActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FileUtil.context = applicationContext
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_sample_basic_usage)
         val glSurfaceView = findViewById<GLSurfaceView>(R.id.glSurfaceView)
         glSurfaceView.setEGLContextClientVersion(3)
         glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 0, 0)

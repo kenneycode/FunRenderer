@@ -42,13 +42,19 @@ class RenderChain {
     }
 
     fun render(input : Input, width : Int = 0, height : Int = 0): FrameBuffer? {
-        var ip: Input?= input
+        var ip: Input? = input
         var output: FrameBuffer ?= null
         renderers.forEach { renderer ->
-            output = renderer.render(ip, width, height)
+            output = renderer.render(ip!!, width, height)
             ip = output
         }
         return output
+    }
+
+    fun release() {
+        renderers.forEach { renderer ->
+            renderer.release()
+        }
     }
 
 }

@@ -12,6 +12,8 @@ import io.github.kenneycode.funrenderer.common.Ref
 
 abstract class Input: Ref() {
 
+    var width = 0
+    var height = 0
     abstract fun getInput(): IntArray
     open fun release() {}
 

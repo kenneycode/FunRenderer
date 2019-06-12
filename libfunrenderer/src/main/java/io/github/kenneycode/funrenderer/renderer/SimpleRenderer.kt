@@ -24,7 +24,7 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
     private val uniforms = mutableSetOf<Parameter>()
     var renderOnInput = false
     var retainOutput = false
-    var input: Input?= null
+    lateinit var input: Input
     var outputFrameBuffer : FrameBuffer? = null
 
     open fun initParameter() {
@@ -46,12 +46,10 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
         uniforms.add(parameter)
     }
 
-    override fun bindInput(input: Input?) {
+    override fun bindInput(input: Input) {
         this.input = input
-        this.input?.let {
-            val textures = it.getInput()
-            setUniform(Texture2DParameter("u_texture", textures[0]))
-        }
+        val textures = this.input.getInput()
+        setUniform(Texture2DParameter("u_texture", textures[0]))
     }
 
     override fun bindParameters() {
@@ -61,14 +59,11 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
 
     override fun bindOutput(width: Int, height: Int) {
         if (outputFrameBuffer == null) {
-            if (renderOnInput) {
-                input?.addRef()
-                outputFrameBuffer = input as FrameBuffer
+            outputFrameBuffer = if (renderOnInput) {
+                input.addRef()
+                input as FrameBuffer
             } else {
-                input?.let {
-                    outputFrameBuffer = FrameBufferCache.obtainFrameBuffer(width, height)
-                }
-
+                FrameBufferCache.obtainFrameBuffer(width, height)
             }
             if (retainOutput) {
                 outputFrameBuffer?.addRef()
@@ -79,7 +74,7 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
     }
 
     override fun unBindInput() {
-        input?.releaseRef()
+        input.releaseRef()
     }
 
     override fun unBindParameters() {
@@ -96,11 +91,14 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
 
     }
 
-    override fun render(input: Input?, width: Int, height: Int): FrameBuffer {
+    override fun render(input: Input, width: Int, height: Int): FrameBuffer {
+
+        val outputWidth = if (width == 0) { input.width } else { width }
+        val outputHeight = if (height == 0) { input.height } else { height }
         bindInput(input)
         bindParameters()
-        bindOutput(width, height)
-        performRendering(width, height)
+        bindOutput(outputWidth, outputHeight)
+        performRendering(outputWidth, outputHeight)
         unBindInput()
         unBindParameters()
         unBindOutput()
