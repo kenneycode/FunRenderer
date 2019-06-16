@@ -14,13 +14,13 @@ import kotlinx.android.synthetic.main.item_sample.view.*
 
 class MainActivity : Activity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FileUtil.context = applicationContext
         setContentView(R.layout.activity_main)
         val sampleActivities = arrayOf(
-                SampleItem(getString(R.string.basic_usage), SampleBasicUsageActivity::class.java)
+                SampleItem(getString(R.string.sample_basic_usage), SampleBasicUsageActivity::class.java),
+                SampleItem(getString(R.string.sample_render_chain), SampleRenderChainActivity::class.java)
         )
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -42,6 +42,7 @@ class MainActivity : Activity() {
             vh.itemView.sampleButton.text = sampleActivities[index].sampleSame
             vh.itemView.sampleButton.setOnClickListener {
                 val intent = Intent(this@MainActivity, sampleActivities[index].sampleActivity)
+                intent.putExtra(Constants.KEY_SAMPLE_NAME, sampleActivities[index].sampleSame)
                 this@MainActivity.startActivity(intent)
             }
         }

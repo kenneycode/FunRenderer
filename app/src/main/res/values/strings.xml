@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FunRendererDemo</string>
-    <string name="basic_usage">基本用法（basic usage）</string>
+    <string name="sample_basic_usage">基本用法(basic usage)</string>
+    <string name="sample_render_chain">渲染链(render chain)</string>
 </resources>

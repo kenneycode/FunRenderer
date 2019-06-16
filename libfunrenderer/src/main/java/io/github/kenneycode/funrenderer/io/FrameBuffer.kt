@@ -35,9 +35,15 @@ open class FrameBuffer(var texture: Int = 0, width : Int = 0, height : Int = 0, 
                 texture = if (texture == 0) { GLUtil.createTexture() } else { texture }
             }
             if (width != this.width || height != this.height) {
-                GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBuffer)
-                GLES30.glFramebufferTexture2D(GLES30.GL_FRAMEBUFFER, GLES30.GL_COLOR_ATTACHMENT0, GLES30.GL_TEXTURE_2D, texture, 0)
+                this.width = width
+                this.height = height
+                GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, texture)
                 GLES30.glTexImage2D(GLES30.GL_TEXTURE_2D, 0, GLES30.GL_RGBA, width, height, 0, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, null)
+                GLUtil.checkError()
+                GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBuffer)
+                GLUtil.checkError()
+                GLES30.glFramebufferTexture2D(GLES30.GL_FRAMEBUFFER, GLES30.GL_COLOR_ATTACHMENT0, GLES30.GL_TEXTURE_2D, texture, 0)
+                GLUtil.checkError()
             }
         }
         GLES30.glBindFramebuffer(GLES30.GL_FRAMEBUFFER, frameBuffer)
