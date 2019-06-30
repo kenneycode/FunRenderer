@@ -87,8 +87,8 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
         }
     }
 
-    override fun update(data: Any?) {
-
+    override fun update(data: MutableMap<String, Any>): MutableMap<String, Any> {
+        return data
     }
 
     override fun render(input: Input, width: Int, height: Int): FrameBuffer {
@@ -96,17 +96,17 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
         val outputWidth = if (width == 0) { input.width } else { width }
         val outputHeight = if (height == 0) { input.height } else { height }
         bindInput(input)
-        bindParameters()
         bindOutput(outputWidth, outputHeight)
-        performRendering(outputWidth, outputHeight)
+        bindParameters()
+        performRendering()
         unBindInput()
-        unBindParameters()
         unBindOutput()
+        unBindParameters()
 
         return outputFrameBuffer!!
     }
 
-    override fun performRendering(width: Int, height: Int) {
+    override fun performRendering() {
         GLES30.glClearColor(0.0f, 1.0f, 0.0f, 1.0f)
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 6)

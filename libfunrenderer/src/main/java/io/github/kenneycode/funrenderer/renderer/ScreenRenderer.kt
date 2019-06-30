@@ -1,9 +1,9 @@
 package io.github.kenneycode.funrenderer.renderer
 
 import android.opengl.GLES30
-import io.github.kenneycode.funrenderer.common.Constants
 import io.github.kenneycode.funrenderer.common.FrameBufferCache
-import io.github.kenneycode.funrenderer.parameter.FloatArrayParameter
+import io.github.kenneycode.funrenderer.common.Keys
+import io.github.kenneycode.funrenderer.common.Size
 
 /**
  *
@@ -15,17 +15,29 @@ import io.github.kenneycode.funrenderer.parameter.FloatArrayParameter
 
 class ScreenRenderer : SimpleRenderer() {
 
-    override fun initParameter() {
-        setAttribute(FloatArrayParameter("a_position", Constants.COMMON_VERTEX_FLIPY))
-        setAttribute(FloatArrayParameter("a_textureCoordinate", Constants.COMMON_TEXTURE_COORDINATE))
+    private var surfaceSize: Size? = null
+
+    override fun update(data: MutableMap<String, Any>): MutableMap<String, Any> {
+        data[Keys.SURFACE_WIDTH]?.let { width ->
+            data[Keys.SURFACE_HEIGHT]?.let { height ->
+                surfaceSize = Size(width as Int, height as Int)
+            }
+        }
+        return super.update(data)
     }
 
     override fun bindOutput(width: Int, height: Int) {
+        var outputWidth = width
+        var outputHeight = height
+        surfaceSize?.let {
+            outputWidth = it.width
+            outputHeight = it.height
+        }
         if (outputFrameBuffer == null) {
             outputFrameBuffer = FrameBufferCache.obtainFrameBuffer()
         }
         outputFrameBuffer!!.onBind()
-        GLES30.glViewport(0, 0, width, height)
+        GLES30.glViewport(0, 0, outputWidth, outputHeight)
     }
 
 }

@@ -12,7 +12,7 @@ import io.github.kenneycode.funrenderer.uitl.GLUtil
  *
  **/
 
-open class FrameBuffer(var texture: Int = 0, width : Int = 0, height : Int = 0, private var autoRecycle : Boolean = true) : Output() {
+open class FrameBuffer(var texture: Int = 0, width : Int = 0, height : Int = 0, private var autoRecycle : Boolean = true) : Output(width, height) {
 
     var frameBuffer = 0
 

@@ -1,6 +1,7 @@
 package io.github.kenneycode.funrenderer.parameter
 
 import android.opengl.GLES30
+import io.github.kenneycode.funrenderer.uitl.GLUtil
 
 /**
  *
@@ -10,13 +11,15 @@ import android.opengl.GLES30
  *
  **/
 
-class IntParameter(key : String, private val value : Int) : Parameter(key) {
+class Mat4Parameter(key : String, private val value : FloatArray) : Parameter(key) {
 
     override fun bindUniform(program: Int) {
         if (location < 0) {
             location = GLES30.glGetUniformLocation(program, key)
         }
-        GLES30.glUniform1i(location, value)
+        GLUtil.checkError()
+        GLES30.glUniformMatrix4fv(location, 1, false, value, 0)
+        GLUtil.checkError()
     }
 
 }

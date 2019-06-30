@@ -10,10 +10,8 @@ import io.github.kenneycode.funrenderer.common.Ref
  *
  **/
 
-abstract class Input: Ref() {
+abstract class Input(var width: Int = 0, var height: Int = 0) : Ref() {
 
-    var width = 0
-    var height = 0
     abstract fun getInput(): IntArray
     open fun release() {}
 

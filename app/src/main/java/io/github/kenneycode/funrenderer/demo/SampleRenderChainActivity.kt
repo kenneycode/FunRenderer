@@ -3,9 +3,11 @@ package io.github.kenneycode.funrenderer.demo
 import android.app.Activity
 import android.opengl.GLSurfaceView
 import android.os.Bundle
+import io.github.kenneycode.funrenderer.common.Keys
 import io.github.kenneycode.funrenderer.common.RenderChain
 import io.github.kenneycode.funrenderer.io.Input
 import io.github.kenneycode.funrenderer.io.Texture
+import io.github.kenneycode.funrenderer.renderer.FlipRenderer
 import io.github.kenneycode.funrenderer.renderer.ScaleRenderer
 import io.github.kenneycode.funrenderer.renderer.ScreenRenderer
 import io.github.kenneycode.funrenderer.uitl.FileUtil
@@ -48,7 +50,10 @@ class SampleRenderChainActivity : Activity() {
         private var glSurfaceViewHeight = 0
 
         override fun onDrawFrame(gl: GL10?) {
-            renderChain.render(input, glSurfaceViewWidth, glSurfaceViewHeight)
+            val data = mutableMapOf<String, Any>()
+            data[Keys.SURFACE_WIDTH] = glSurfaceViewWidth
+            data[Keys.SURFACE_HEIGHT] = glSurfaceViewHeight
+            renderChain.render(input, data)
         }
 
         override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -57,14 +62,15 @@ class SampleRenderChainActivity : Activity() {
         }
 
         override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
+            val flipRenderer = FlipRenderer()
             val scaleRenderer = ScaleRenderer()
             val screenRenderer = ScreenRenderer()
-            scaleRenderer.init()
-            screenRenderer.init()
             scaleRenderer.setScaledSize(100, 100)
             renderChain = RenderChain.create()
+                    .addRenderer(flipRenderer)
                     .addRenderer(scaleRenderer)
                     .addRenderer(screenRenderer)
+            renderChain.init()
             val bitmap = FileUtil.decodeBitmapFromAssets("image_0.jpg")
             val texture = GLUtil.createTexture()
             GLUtil.loadBitmap2Texture(texture, bitmap)

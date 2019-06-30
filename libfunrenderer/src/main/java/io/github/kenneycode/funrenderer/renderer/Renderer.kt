@@ -14,8 +14,8 @@ import io.github.kenneycode.funrenderer.parameter.Parameter
 
 interface Renderer {
 
-    fun init() : Boolean
-    fun setAttribute(parameter : Parameter)
+    fun init(): Boolean
+    fun setAttribute(parameter: Parameter)
     fun setUniform(parameter : Parameter)
     fun bindInput(input : Input)
     fun bindParameters()
@@ -23,9 +23,9 @@ interface Renderer {
     fun unBindInput()
     fun unBindParameters()
     fun unBindOutput()
-    fun update(data : Any? = null)
+    fun update(data: MutableMap<String, Any> = mutableMapOf()): MutableMap<String, Any>
     fun render(input : Input, width : Int, height : Int) : FrameBuffer
-    fun performRendering(width: Int, height: Int)
+    fun performRendering()
     fun release()
 
 }

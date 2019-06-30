@@ -8,7 +8,7 @@ package io.github.kenneycode.funrenderer.io
  *
  **/
 
-abstract class Output: Input() {
+abstract class Output(width : Int = 0, height : Int = 0): Input(width, height) {
 
     abstract fun onBind(width: Int = 0, height: Int = 0)
     abstract fun onUnBind()

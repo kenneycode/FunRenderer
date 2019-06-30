@@ -35,17 +35,14 @@ class RenderChain {
         return this
     }
 
-    fun update(data : Any?) {
-        renderers.forEach { renderer ->
-            renderer.update(data)
-        }
-    }
-
-    fun render(input : Input, width : Int = 0, height : Int = 0): FrameBuffer? {
+    fun render(input : Input, data: MutableMap<String, Any> = mutableMapOf()): FrameBuffer? {
         var ip: Input? = input
+        var d = data
         var output: FrameBuffer ?= null
         renderers.forEach { renderer ->
-            output = renderer.render(ip!!, width, height)
+            d[Keys.INPUT_SIZE] = Size(ip!!.width, ip!!.height)
+            d = renderer.update(d)
+            output = renderer.render(ip!!, ip!!.width, ip!!.height)
             ip = output
         }
         return output
