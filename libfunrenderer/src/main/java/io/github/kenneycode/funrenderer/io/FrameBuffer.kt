@@ -29,7 +29,7 @@ open class FrameBuffer(var texture: Int = 0, width : Int = 0, height : Int = 0, 
     }
 
     private fun bind(width: Int = 0, height: Int = 0) {
-        if (width != 0 && height != 0 && frameBuffer == 0) {
+        if (width != 0 && height != 0) {
             if (frameBuffer == 0) {
                 frameBuffer = GLUtil.createFrameBuffer()
                 texture = if (texture == 0) { GLUtil.createTexture() } else { texture }
