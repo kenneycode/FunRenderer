@@ -109,6 +109,8 @@ open class SimpleRenderer(vertexShader: String = Constants.COMMON_VERTEX_SHADER,
     override fun performRendering() {
         GLES30.glClearColor(0.0f, 1.0f, 0.0f, 1.0f)
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
+        GLES30.glEnable(GLES30.GL_BLEND)
+        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 6)
     }
 
